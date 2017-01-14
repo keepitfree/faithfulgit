@@ -117,7 +117,7 @@ echo "#   cd to root of this git repository" >> .faithful/post-commit
 echo "cd (git rev-parse --show-toplevel)" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "#   get path of faithful files" >> .faithful/post-commit
-echo "set faithfulfiles (sed -n 's/\([a-zA-Z0-9\/\*]*\).*[ ]*merge[ \t]*=[ \t]*'\$mergedriver'.*\$/\1/p' \$gitattributes)" >> .faithful/post-commit
+echo "set faithfulfiles (sed -n 's/\([a-zA-Z0-9\/\*_\.]*\).*[ ]*merge[ \t]*=[ \t]*'\$mergedriver'.*\$/\1/p' \$gitattributes)" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "#   get names of branches" >> .faithful/post-commit
 echo "set branches (git branch | sed -n 's/^[ *][ ]\(\)/\1/p')" >> .faithful/post-commit
@@ -130,7 +130,7 @@ echo "    for faithfulfile in \$faithfulfiles" >> .faithful/post-commit
 echo "        log \"[faithful] updating \$branch:\$faithfulfile\"" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "        #   update timestamp in files" >> .faithful/post-commit
-echo "        sed -i 's/'\$faithfulregexp'.*/\1 '\$branch':'\$faithfulfile' '(date +%Y%m%d%H%M%S%N)[1]'/' \$faithfulfile" >> .faithful/post-commit
+echo "        sed -i 's/\$faithfulregexp.*/\1 '\$branch':'(echo \$faithfulfile | sed 's/\//\\\//g')' '(date +%Y%m%d%H%M%S%N)[1]'/' \$faithfulfile" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "        #   add faithful files to current commit" >> .faithful/post-commit
 echo "        git add \$faithfulfile > /dev/null" >> .faithful/post-commit
