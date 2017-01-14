@@ -23,9 +23,6 @@ The implemented solution works as follows
 fish shell
 
 # installation
-Put installfaithfulgit.fish in your repo and execute it. This will install a custom merge driver and a post-commit hook. A hidden directory .faithfulgit will be created and filled.
-
-# usage
 For each branch dependent file FILE, do
 1) add the merge driver to .gitattributes
 `FILE merge=faithful`
@@ -35,6 +32,14 @@ For each branch dependent file FILE, do
 # [faithful]
 ...
 ~~~~
+
+Put installfaithfulgit.fish in your repo and execute it. This will install a custom merge driver and a post-commit hook. A hidden directory .faithfulgit will be created and filled.
+
+To make new files faithful, temporarily disable faithful using
+`chmod -x .git/hooks/post-commit`
+
+Then, add the file to every branch and put the keyword in the files, update .gitattributes and make the file executable again.
+
 
 # disclaimer
 This is a recent development. Please try this on a clone of your repo first.

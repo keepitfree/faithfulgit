@@ -29,7 +29,8 @@ for branch in $branches
         log "[faithful] updating $branch:$faithfulfile"
 
         #   update timestamp in files
-        sed -i 's/'$faithfulregexp'.*/\1 '$branch':'$faithfulfile' '(date +%Y%m%d%H%M%S%N)[1]'/' $faithfulfile
+        set identifier (echo $faithfulfile | sed 's/\//\\\\\//g')
+        sed -i 's/'$faithfulregexp'.*/\1 '$branch':'$identifier' '(date +%Y%m%d%H%M%S%N)[1]'/' $faithfulfile
 
         #   add faithful files to current commit
         git add $faithfulfile > /dev/null
