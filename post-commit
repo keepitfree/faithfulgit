@@ -16,7 +16,7 @@ set mybranch (git branch | sed '/^[^*]/d;s/^[*][ ]\([a-z]\)/\1/')
 cd (git rev-parse --show-toplevel)
 
 #   get path of faithful files
-set faithfulfiles (sed -n 's/\([a-zA-Z0-9\/\*]*\).*[ ]*merge[ \t]*=[ \t]*'$mergedriver'.*$/\1/p' $gitattributes)
+set faithfulfiles (sed -n 's/\([a-zA-Z0-9\/\*_\.]*\).*[ ]*merge[ \t]*=[ \t]*'$mergedriver'.*$/\1/p' $gitattributes)
 
 #   get names of branches
 set branches (git branch | sed -n 's/^[ *][ ]\(\)/\1/p')

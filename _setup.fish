@@ -40,7 +40,7 @@ chmod -x .git/hooks/post-commit
 set branches $mybranch (git branch | sed 's/^[ *][ ]\([a-z0-9A-Z].*\)/\1/;s/'$mybranch'//' | sed -n 's/\([a-z0-9A-Z].*\)/\1/p')
 
 #   install faithful dir on all branches
-git add setup.fish > /dev/null
+git add installfaithfulgit.fish > /dev/null
 for branch in $branches
     git checkout --quiet $branch
     
