@@ -130,7 +130,7 @@ echo "    for faithfulfile in \$faithfulfiles" >> .faithful/post-commit
 echo "        log \"[faithful] updating \$branch:\$faithfulfile\"" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "        #   update timestamp in files" >> .faithful/post-commit
-echo "        set identifier (echo \$faithfulfile | sed 's/\\\\\\/\\\\\\\\/g')" >> .faithful/post-commit
+echo "        set identifier (echo \$faithfulfile | sed 's/\\\//\\\\\\//g')" >> .faithful/post-commit
 echo "        sed -i 's/'\$faithfulregexp'.*/\\1 '\$branch':'\$identifier' '(date +%Y%m%d%H%M%S%N)[1]'/' \$faithfulfile" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "        #   add faithful files to current commit" >> .faithful/post-commit
