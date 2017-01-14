@@ -24,16 +24,16 @@ chmod -x ".git/hooks/post-commit"
 
 #   memory current working directory and branch
 set mydir (pwd)
-set mybranch (git branch | sed '/^[^*]/d;s/^[*][ ]\\\\([a-z]\)/\1/')
+set mybranch (git branch | sed '/^[^*]/d;s/^[*][ ]\([a-z]\)/\1/')
 
 #   cd to root of this git repository
 cd (git rev-parse --show-toplevel)
 
 #   get path of faithful files
-set faithfulfiles (sed -n 's/\\\\([a-zA-Z0-9\/\*_\.]*\).*[ ]*merge[ \t]*=[ \t]*'$mergedriver'.*$/\1/p' $gitattributes)
+set faithfulfiles (sed -n 's/\([a-zA-Z0-9\/\*_\.]*\).*[ ]*merge[ \t]*=[ \t]*'$mergedriver'.*$/\1/p' $gitattributes)
 
 #   get names of branches
-set branches (git branch | sed -n 's/^[ *][ ]\\\\(\)/\1/p')
+set branches (git branch | sed -n 's/^[ *][ ]\(\)/\1/p')
 
 #   create merge conflicts: update faithful files on all branches
 for branch in $branches
@@ -43,8 +43,8 @@ for branch in $branches
         log "[faithful] updating $branch:$faithfulfile"
 
         #   update timestamp in files
-        set identifier (echo $faithfulfile | sed 's/\\\\\//\\\//g')
-        sed -i 's/'$faithfulregexp'.*/\\\\1 '$branch':'$identifier' '(date +%Y%m%d%H%M%S%N)[1]'/' $faithfulfile
+        set identifier (echo $faithfulfile | sed 's/\//\\\//g')
+        sed -i 's/'$faithfulregexp'.*/\1 '$branch':'$identifier' '(date +%Y%m%d%H%M%S%N)[1]'/' $faithfulfile
 
         #   add faithful files to current commit
         git add $faithfulfile > /dev/null

@@ -27,8 +27,8 @@ set B $argv[3]
 set L $argv[3]
 set P $argv[3]
 
-set Aname (cat $A | sed -n 's/'$faithfulregexp'[ ]\\\\([^:]*:[^ ]*\)[ ][0-9]*/\2/p')
-set Bname (cat $B | sed -n 's/'$faithfulregexp'[ ]\\\\([^:]*:[^ ]*\)[ ][0-9]*/\2/p')
+set Aname (cat $A | sed -n 's/'$faithfulregexp'[ ]\([^:]*:[^ ]*\)[ ][0-9]*/\2/p')
+set Bname (cat $B | sed -n 's/'$faithfulregexp'[ ]\([^:]*:[^ ]*\)[ ][0-9]*/\2/p')
 
 #   if two versions of the same branch are merged, forward this job to git
 if test $Bname = $Aname
@@ -36,9 +36,9 @@ if test $Bname = $Aname
 
     #   avoid merge conflicts resulting from faithful timestamps
     set synceddate (date +%Y%m%d%H%M%S%N)[1]
-    sed -i 's/'$faithfulregexp'\\\\([ ][^:]*:[^ ]*\).*/\1 \2 '$synceddate'/' $A
-    sed -i 's/'$faithfulregexp'\\\\([ ][^:]*:[^ ]*\).*/\1 \2 '$synceddate'/' $B
-    sed -i 's/'$faithfulregexp'\\\\([ ][^:]*:[^ ]*\).*/\1 \2 '$synceddate'/' $O
+    sed -i 's/'$faithfulregexp'\([ ][^:]*:[^ ]*\).*/\1 \2 '$synceddate'/' $A
+    sed -i 's/'$faithfulregexp'\([ ][^:]*:[^ ]*\).*/\1 \2 '$synceddate'/' $B
+    sed -i 's/'$faithfulregexp'\([ ][^:]*:[^ ]*\).*/\1 \2 '$synceddate'/' $O
 
     git merge-file $A $B $O
 else
