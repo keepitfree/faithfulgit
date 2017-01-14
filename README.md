@@ -33,8 +33,6 @@ For each branch dependent file FILE, do
 ...
 ~~~~
 
-**_Please note_ The installscript has a bug at the moment. Please use the post-commit hook provided by this git repo instead to replace the version that is installed by the installation script**
-
 Put installfaithfulgit.fish in your repo and execute it. This will install a custom merge driver and a post-commit hook. A hidden directory .faithfulgit will be created and filled.
 
 To make new files faithful, temporarily disable faithful using
