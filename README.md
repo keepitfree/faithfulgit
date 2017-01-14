@@ -4,11 +4,17 @@ Branch dependent files in git repos
 This set of scripts enables files that will not change on merges with other branches.
 
 Assume two branches master and second, both containing the faithful file with branch dependent content.
+
 1) merging master on second won't change the faithful file
+
 2) commiting will work as before, version control is still available.
+
 3) merging master of repo one on master of repo two will merge the faithful file
 
+
+
 The implemented solution works as follows
+
 1) Create a custom merge driver that will ignore merge conflicts for the respective files. The driver has to be registered for each file in .gitattributes
 
 2) Create merge conflicts at each commit in those files (otherwise, the merge is trivial and the merge driver will not be used). This is done by a post-commit hook in .git/hooks/post-commit that changes those files in each branch after each commit.
