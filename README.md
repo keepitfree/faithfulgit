@@ -8,7 +8,7 @@ Assume two branches master and second, both containing the faithful file with br
 2) commiting will work as before, version control is still available.
 3) merging master of repo one on master of repo two will merge the faithful file
 
-# dependecies
+# dependencies
 fish shell
 
 # installation
