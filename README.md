@@ -18,7 +18,7 @@ Put installfaithfulgit.fish in your repo and execute it. This will install a cus
 For each branch dependent file FILE, do
 1) add the merge driver to .gitattributes
 `FILE merge=faithful`
-2) add a line to FILE containing the a search key (do this on each branch). Default is [faithful] you can edit this in .faithful/config.fish
+2) add a line to FILE containing the a keyword (do this on each branch). Default is [faithful] you can edit this in .faithful/config.fish. This line will be changed automatically on each commit.
 ~~~~
 ...
 # [faithful]
