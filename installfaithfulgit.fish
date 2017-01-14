@@ -49,8 +49,8 @@ echo "set B \$argv[3]" >> .faithful/merge.fish
 echo "set L \$argv[3]" >> .faithful/merge.fish
 echo "set P \$argv[3]" >> .faithful/merge.fish
 echo "" >> .faithful/merge.fish
-echo "set Aname (cat \$A | sed -n 's/'\$faithfulregexp'[ ]\\\\([^:]*:[^ ]*\)[ ][0-9]*/\2/p')" >> .faithful/merge.fish
-echo "set Bname (cat \$B | sed -n 's/'\$faithfulregexp'[ ]\\\\([^:]*:[^ ]*\)[ ][0-9]*/\2/p')" >> .faithful/merge.fish
+echo "set Aname (cat \$A | sed -n 's/'\$faithfulregexp'[ ]\\\\\\\\([^:]*:[^ ]*\)[ ][0-9]*/\2/p')" >> .faithful/merge.fish
+echo "set Bname (cat \$B | sed -n 's/'\$faithfulregexp'[ ]\\\\\\\\([^:]*:[^ ]*\)[ ][0-9]*/\2/p')" >> .faithful/merge.fish
 echo "" >> .faithful/merge.fish
 echo "#   if two versions of the same branch are merged, forward this job to git" >> .faithful/merge.fish
 echo "if test \$Bname = \$Aname" >> .faithful/merge.fish
@@ -58,9 +58,9 @@ echo "    log \"[faithful] merging theirs \"\$Bname" >> .faithful/merge.fish
 echo "" >> .faithful/merge.fish
 echo "    #   avoid merge conflicts resulting from faithful timestamps" >> .faithful/merge.fish
 echo "    set synceddate (date +%Y%m%d%H%M%S%N)[1]" >> .faithful/merge.fish
-echo "    sed -i 's/'\$faithfulregexp'\\\\([ ][^:]*:[^ ]*\).*/\1 \2 '\$synceddate'/' \$A" >> .faithful/merge.fish
-echo "    sed -i 's/'\$faithfulregexp'\\\\([ ][^:]*:[^ ]*\).*/\1 \2 '\$synceddate'/' \$B" >> .faithful/merge.fish
-echo "    sed -i 's/'\$faithfulregexp'\\\\([ ][^:]*:[^ ]*\).*/\1 \2 '\$synceddate'/' \$O" >> .faithful/merge.fish
+echo "    sed -i 's/'\$faithfulregexp'\\\\\\\\([ ][^:]*:[^ ]*\).*/\1 \2 '\$synceddate'/' \$A" >> .faithful/merge.fish
+echo "    sed -i 's/'\$faithfulregexp'\\\\\\\\([ ][^:]*:[^ ]*\).*/\1 \2 '\$synceddate'/' \$B" >> .faithful/merge.fish
+echo "    sed -i 's/'\$faithfulregexp'\\\\\\\\([ ][^:]*:[^ ]*\).*/\1 \2 '\$synceddate'/' \$O" >> .faithful/merge.fish
 echo "" >> .faithful/merge.fish
 echo "    git merge-file \$A \$B \$O" >> .faithful/merge.fish
 echo "else" >> .faithful/merge.fish
@@ -111,16 +111,16 @@ echo "chmod -x \".git/hooks/post-commit\"" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "#   memory current working directory and branch" >> .faithful/post-commit
 echo "set mydir (pwd)" >> .faithful/post-commit
-echo "set mybranch (git branch | sed '/^[^*]/d;s/^[*][ ]\\\\([a-z]\)/\1/')" >> .faithful/post-commit
+echo "set mybranch (git branch | sed '/^[^*]/d;s/^[*][ ]\\\\\\\\([a-z]\)/\1/')" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "#   cd to root of this git repository" >> .faithful/post-commit
 echo "cd (git rev-parse --show-toplevel)" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "#   get path of faithful files" >> .faithful/post-commit
-echo "set faithfulfiles (sed -n 's/\\\\([a-zA-Z0-9\/\*_\.]*\).*[ ]*merge[ \t]*=[ \t]*'\$mergedriver'.*\$/\1/p' \$gitattributes)" >> .faithful/post-commit
+echo "set faithfulfiles (sed -n 's/\\\\\\\\([a-zA-Z0-9\/\*_\.]*\).*[ ]*merge[ \t]*=[ \t]*'\$mergedriver'.*\$/\1/p' \$gitattributes)" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "#   get names of branches" >> .faithful/post-commit
-echo "set branches (git branch | sed -n 's/^[ *][ ]\\\\(\)/\1/p')" >> .faithful/post-commit
+echo "set branches (git branch | sed -n 's/^[ *][ ]\\\\\\\\(\)/\1/p')" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "#   create merge conflicts: update faithful files on all branches" >> .faithful/post-commit
 echo "for branch in \$branches" >> .faithful/post-commit
@@ -130,8 +130,8 @@ echo "    for faithfulfile in \$faithfulfiles" >> .faithful/post-commit
 echo "        log \"[faithful] updating \$branch:\$faithfulfile\"" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "        #   update timestamp in files" >> .faithful/post-commit
-echo "        set identifier (echo \$faithfulfile | sed 's/\\\\\//\\\\\\//g')" >> .faithful/post-commit
-echo "        sed -i 's/'\$faithfulregexp'.*/\\\\1 '\$branch':'\$identifier' '(date +%Y%m%d%H%M%S%N)[1]'/' \$faithfulfile" >> .faithful/post-commit
+echo "        set identifier (echo \$faithfulfile | sed 's/\\\\\\\\\//\\\\\\//g')" >> .faithful/post-commit
+echo "        sed -i 's/'\$faithfulregexp'.*/\\\\\\\\1 '\$branch':'\$identifier' '(date +%Y%m%d%H%M%S%N)[1]'/' \$faithfulfile" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "        #   add faithful files to current commit" >> .faithful/post-commit
 echo "        git add \$faithfulfile > /dev/null" >> .faithful/post-commit
@@ -164,9 +164,9 @@ echo "# The above copyright notice and this permission notice shall be included 
 echo "#" >> .faithful/config.fish
 echo "# THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE." >> .faithful/config.fish
 echo "# --------------------------------------------------------" >> .faithful/config.fish
-echo "set faithfulkey \"\\\\[faithful\]\"" >> .faithful/config.fish
+echo "set faithfulkey \"\\\\\\\\[faithful\]\"" >> .faithful/config.fish
 echo "#   regexp used to find the line that this script can modify" >> .faithful/config.fish
-echo "set faithfulregexp \"\\\\([^\[]*\"\$faithfulkey\"\)\"" >> .faithful/config.fish
+echo "set faithfulregexp \"\\\\\\\\([^\[]*\"\$faithfulkey\"\)\"" >> .faithful/config.fish
 echo "" >> .faithful/config.fish
 echo "#   arbitrary name of the mergedriver" >> .faithful/config.fish
 echo "set mergedriver faithful" >> .faithful/config.fish
