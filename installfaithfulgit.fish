@@ -130,8 +130,10 @@ echo "    for faithfulfile in \$faithfulfiles" >> .faithful/post-commit
 echo "        log \"[faithful] updating \$branch:\$faithfulfile\"" >> .faithful/post-commit
 echo "" >> .faithful/post-commit
 echo "        #   update timestamp in files" >> .faithful/post-commit
-echo "        #   set identifier (echo \$faithfulfile | sed 's/\\//\\\\\\//g')" >> .faithful/post-commit
-echo "        #   set identifier (echo \$faithfulfile | sed 's/\//\\\//g')" >> .faithful/post-commit
+echo "        #   for some reason, the compile script changes the next line. In order to get the next line," >> .faithful/post-commit
+echo "        #       set identifier (echo \$faithfulfile | sed 's/\\//\\\\\\//g')" >> .faithful/post-commit
+echo "        #   I have to write" >> .faithful/post-commit
+echo "        #       set identifier (echo \$faithfulfile | sed 's/\\\\//\\\\\\\\\\\\//g')" >> .faithful/post-commit
 echo "        set identifier (echo \$faithfulfile | sed 's/\\\\//\\\\\\\\\\\\//g')" >> .faithful/post-commit
 echo "        sed -i 's/'\$faithfulregexp'.*/\1 '\$branch':'\$identifier' '(date +%Y%m%d%H%M%S%N)[1]'/' \$faithfulfile" >> .faithful/post-commit
 echo "" >> .faithful/post-commit

@@ -16,6 +16,7 @@ set target installfaithfulgit.fish
 function archivefile
     cat developerinfo $argv[1] | sed 's/\$/\\\$/g;s/\"/\\\"/g;s/\(.*\)/echo \"\1\" >> \.faithful\/'(echo $argv[1] | sed 's/\./\\\./g')'/' >> $argv[2]
 end
+# s/\\\\/\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/
 
 # COMPILE
 rm $target
