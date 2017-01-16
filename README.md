@@ -42,6 +42,7 @@ To make new files faithful, temporarily disable faithful using
 
 Then, add the file to every branch and put the keyword in the files, update .gitattributes and make the file executable again.
 
+Please note: On every merge that is trivial or fast forward, the files might still be overwritten. You can permanentely disable fast forward merges using `git config --add merge.ff false` If you want to disable fast foward merges only on some branches, you can use `git config branch.master.mergeoptions  "--no-ff"`
 
 # disclaimer
 This is a recent development. Please try this on a clone of your repo first.
